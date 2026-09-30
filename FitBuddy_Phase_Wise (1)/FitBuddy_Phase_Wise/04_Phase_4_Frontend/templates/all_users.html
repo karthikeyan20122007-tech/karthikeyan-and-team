@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Admin{% endblock %}
+{% block content %}
+<section class="card"><h1>All Users</h1><p>Stored FitBuddy profiles and plans.</p></section>
+{% for user in users %}<section class="card admin-card"><div class="admin-head"><div><h2>{{ user.name }} <small>({{ user.user_id }})</small></h2><p>{{ user.age }} years · {{ user.weight }} kg · {{ user.goal }} · {{ user.intensity }}</p></div><form method="post" action="/delete-user"><input type="hidden" name="user_id" value="{{ user.user_id }}"><button class="danger" type="submit" onclick="return confirm('Delete this user and their plans?')">Delete</button></form></div>{% for plan in user.plans|sort(attribute='created_at', reverse=true) %}<details><summary>Plan created {{ plan.created_at.strftime('%Y-%m-%d %H:%M') }}</summary><h3>Original</h3><pre class="plan">{{ plan.original_plan }}</pre>{% if plan.updated_plan %}<h3>Updated</h3><pre class="plan">{{ plan.updated_plan }}</pre><p><strong>Feedback:</strong> {{ plan.feedback }}</p>{% endif %}</details>{% endfor %}</section>{% else %}<section class="card"><p>No users yet.</p></section>{% endfor %}
+{% endblock %}

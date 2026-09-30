@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Create Your Plan{% endblock %}
+{% block content %}
+<section class="hero"><div><span class="eyebrow">AI FITNESS PLANNER</span><h1>Your week, planned smarter.</h1><p>Generate a structured 7-day general fitness plan and a practical nutrition or recovery tip.</p></div></section>
+{% if settings.demo_mode and not settings.gemini_api_key %}<div class="notice">Demo mode is active because no Gemini API key is configured. Add a key to use Gemini generation.</div>{% endif %}
+<section class="card"><h2>Tell FitBuddy about you</h2><form method="post" action="/generate-workout" class="grid-form">
+<label>Name<input name="name" required maxlength="100" placeholder="Your name"></label>
+<label>User ID<input name="user_id" required maxlength="64" pattern="[A-Za-z0-9_-]+" placeholder="e.g. user001"></label>
+<label>Age<input name="age" type="number" min="13" max="100" required></label>
+<label>Weight (kg)<input name="weight" type="number" min="20.1" max="499" step="0.1" required></label>
+<label>Fitness goal<select name="goal" required><option value="weight loss">Weight loss</option><option value="muscle gain">Muscle gain</option><option value="general wellness">General wellness</option><option value="flexibility">Flexibility</option><option value="endurance">Endurance</option></select></label>
+<label>Workout intensity<select name="intensity" required><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></label>
+<div class="full"><button type="submit">Generate 7-Day Plan</button></div>
+</form></section>
+<section class="safety"><strong>Safety note:</strong> This app gives general wellness guidance. Stop activity if you feel pain, dizziness, or unusual symptoms and seek appropriate adult or professional guidance.</section>
+{% endblock %}

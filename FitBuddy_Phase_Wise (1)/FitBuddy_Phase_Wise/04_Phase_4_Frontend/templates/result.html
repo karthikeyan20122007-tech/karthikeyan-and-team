@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Your Plan{% endblock %}
+{% block content %}
+{% if mode == 'updated' %}<div class="success">Your plan was updated using your feedback.</div>{% endif %}
+<section class="card profile"><h1>{{ user.name }}'s FitBuddy Plan</h1><div class="chips"><span>ID: {{ user.user_id }}</span><span>Age: {{ user.age }}</span><span>{{ user.weight }} kg</span><span>{{ user.goal }}</span><span>{{ user.intensity }} intensity</span></div></section>
+<section class="card"><h2>{% if plan.updated_plan %}Updated Workout Plan{% else %}7-Day Workout Plan{% endif %}</h2><pre class="plan">{{ plan.updated_plan or plan.original_plan }}</pre></section>
+<section class="card"><h2>Nutrition / Recovery Tip</h2><p>{{ plan.nutrition_tip }}</p></section>
+<section class="card"><h2>Refine Your Plan</h2><p>Tell FitBuddy what you want changed, such as adding more cardio or making a session easier.</p><form method="post" action="/submit-feedback"><input type="hidden" name="user_id" value="{{ user.user_id }}"><textarea name="feedback" maxlength="1500" required placeholder="Example: Make Day 3 easier and add more mobility."></textarea><button type="submit">Update Plan</button></form></section>
+{% endblock %}
